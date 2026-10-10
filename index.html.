@@ -1,0 +1,95 @@
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>My Location App</title>
+
+</head>
+
+<body>
+
+  <h1>My Location App</h1>
+
+  <p>Find your current location with permission.</p>
+
+  <button onclick="findLocation()">
+
+    Find My Location
+
+  </button>
+
+  <p id="result">Your location will appear here.</p>
+
+  <a id="map" target="_blank" rel="noopener"></a>
+
+  <script>
+
+    function findLocation() {
+
+      const result = document.getElementById("result");
+
+      const map = document.getElementById("map");
+
+      if (!navigator.geolocation) {
+
+        result.textContent = "Location is not supported.";
+
+        return;
+
+      }
+
+      result.textContent = "Requesting location...";
+
+      map.textContent = "";
+
+      navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+          const lat = position.coords.latitude;
+
+          const lon = position.coords.longitude;
+
+          result.textContent =
+
+            "Latitude: " + lat +
+
+            " | Longitude: " + lon;
+
+          map.href =
+
+            "https://www.google.com/maps?q=" +
+
+            lat + "," + lon;
+
+          map.textContent = "Open location on Google Maps";
+
+        },
+
+        function() {
+
+          result.textContent =
+
+            "Location unavailable. Check permission and try again.";
+
+        },
+
+        { enableHighAccuracy: true, timeout: 15000 }
+
+      );
+
+    }
+
+  </script>
+
+</body>
+
+</html>
